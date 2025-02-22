@@ -19,3 +19,7 @@ class ContourMerge(nn.Module):
         for conv in self.convs[:-1]:
             x = conv(x, edge_index)
             x = torch.relu(x)
+        x = self.convs[-1](x, edge_index)
+        edgeFeature = (x[edge_index[0]] + x[edge_index[1]]) / 2
+        Y = self.mlp(edgeFeature)
+        return Y
