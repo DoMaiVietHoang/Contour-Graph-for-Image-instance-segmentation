@@ -59,15 +59,15 @@ class TreeCrownGraphDataset(Dataset):
         data = Data(x=x, edge_index=edge_index, edge_attr=edge_attr)
         return data
 
-adjacent_dir = '/Users/admin/Desktop/Computer Vision/Contour-Graph-for-Image-instance-segmentation/Data/Adjacent/'
-lpips_dir = '/Users/admin/Desktop/Computer Vision/Contour-Graph-for-Image-instance-segmentation/Data/LPIPS/'
-shape_dir = '/Users/admin/Desktop/Computer Vision/Contour-Graph-for-Image-instance-segmentation/Data/Shape_features/'
+# adjacent_dir = '/Users/admin/Desktop/Computer Vision/Contour-Graph-for-Image-instance-segmentation/Data/Adjacent/'
+# lpips_dir = '/Users/admin/Desktop/Computer Vision/Contour-Graph-for-Image-instance-segmentation/Data/LPIPS/'
+# shape_dir = '/Users/admin/Desktop/Computer Vision/Contour-Graph-for-Image-instance-segmentation/Data/Shape_features/'
 
-dataset = TreeCrownGraphDataset(adjacent_dir, lpips_dir, shape_dir)
-sample = dataset[0]
-print("Node features shape:", sample.x.shape)
-print("Edge index shape:", sample.edge_index.shape)
-print("Edge attributes shape:", sample.edge_attr.shape)
+# dataset = TreeCrownGraphDataset(adjacent_dir, lpips_dir, shape_dir)
+# sample = dataset[1]
+# print("Node features shape:", sample.x.shape)
+# print("Edge index shape:", sample.edge_index.shape)
+# print("Edge attributes shape:", sample.edge_attr.shape)
 
 
 
