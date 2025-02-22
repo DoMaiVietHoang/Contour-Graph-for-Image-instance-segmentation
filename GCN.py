@@ -1,5 +1,6 @@
 import torch
 import torch.nn as nn
+import torch.nn.functional as F
 from torch_geometric.nn import GCNConv
 from torch_geometric.data import Data
 class ContourMerge(nn.Module):
@@ -13,12 +14,14 @@ class ContourMerge(nn.Module):
         self.mlp = nn.Sequential(
             torch.nn.Linear(out_channels,64),
             torch.nn.ReLU(),
-            torch.nn.Linear(64,2),
+            torch.nn.Linear(64,32),
+            torch.nn.ReLU(),
+            torch.nn.Linear(32,2),
         )
     def forward(self, x, edge_index):
         for conv in self.convs[:-1]:
             x = conv(x, edge_index)
-            x = torch.relu(x)
+            x = F.relu(x)
         x = self.convs[-1](x, edge_index)
         edgeFeature = (x[edge_index[0]] + x[edge_index[1]]) / 2
         Y = self.mlp(edgeFeature)
