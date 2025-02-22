@@ -18,10 +18,10 @@ Provide step-by-step instructions on how to install the project.
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/your-repository.git
+git clone git clone (ttps://github.com/DoMaiVietHoang/Contour-Graph-for-Image-instance-segmentation.git
 
 # Navigate to the project directory
-cd your-repository
+cd Contour-Graph-for-Image-instance-segmentation
 
 # Install dependencies
 pip install -r requirements.txt
