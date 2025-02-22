@@ -1,13 +1,12 @@
 from dataset import TreeCrownGraphDataset
+import argparse
 
-def Dataset_construction():
-    Adjacebt_dir = './data/adjacent'
-    LPIPS_dir = './data/lpips'
-    Shape_dir = './data/shape'
-    dataset = TreeCrownGraphDataset(Adjacebt_dir, LPIPS_dir, Shape_dir)
-    return dataset
 def main(args):
-    dataset = Dataset_construction()
-    print(dataset.len())
-if __name__=="__main__":
-    main()
+    print('0')
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description='Train a ContourMerge model')
+    parser.add_argument('--dataPath', type=str, help='Directory containing the adjacent matrix files',default = './data/')
+    '''
+    Path to constuct the dataset
+    '''
