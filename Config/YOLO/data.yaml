@@ -1,0 +1,9 @@
+# Dataset configuration for YOLOv11 segmentation
+path: ../datasets/your_dataset  # dataset root dir
+train: images/train  # train images (relative to 'path')
+val: images/val  # val images (relative to 'path')
+test: images/test  # test images (optional)
+# Classes
+names:
+  0: Tree
+mask_dir: masks  # directory containing segmentation masks 
