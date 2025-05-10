@@ -90,17 +90,36 @@ def train_yolo_seg(config_path='Config/config.yaml', model_size='n'):
         logger.error(f"An error occurred during training: {str(e)}")
         raise
 
-def validate_yolo_model(model, data_yaml):
+def validate_model(model, data_yaml, model_type):
     """
-    Validate the trained model
+    Unified validation function for both YOLO and Mask R-CNN models
     
     Args:
-        model: Trained YOLO model
+        model: Trained model (YOLO or Mask R-CNN)
         data_yaml (str): Path to dataset configuration
+        model_type (str): Type of model ('YOLO' or 'MASKRCNN')
     """
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     try:
-        results = model.val(data=data_yaml)
-        return results
+        if model_type == 'YOLO':
+            results = model.val(data=data_yaml)
+            return results
+        elif model_type == 'MASKRCNN':
+            model.eval()
+            total_loss = 0
+            
+            with torch.no_grad():
+                for images, targets in data_loader:
+                    images = [img.to(device) for img in images]
+                    targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
+                    
+                    loss_dict = model(images, targets)
+                    total_loss += sum(loss for loss in loss_dict.values())
+                    
+            return total_loss / len(data_loader)
+        else:
+            raise ValueError(f"Unsupported model type: {model_type}")
+            
     except Exception as e:
         logging.error(f"Validation error: {str(e)}")
         raise
@@ -182,17 +201,8 @@ def train_mask_rcnn(config_path='Config/config.yaml'):
         for epoch in range(config['MODEL']['EPOCHS']):
             model.train()
             total_loss = 0
-            
-            # Training loop implementation here
-            # You'll need to implement your data loading and training steps
-            # This is a placeholder for the actual training loop
-            
-            # Update learning rate
             lr_scheduler.step()
-            
-            # Log progress
-            logger.info(f"Epoch {epoch+1}/{config['MODEL']['EPOCHS']}, Loss: {total_loss:.4f}")
-            
+            logger.info(f"Epoch {epoch+1}/{config['MODEL']['EPOCHS']}, Loss: {total_loss:.4f}")     
         # Save the final model
         torch.save(model.state_dict(), 'mask_rcnn_model.pth')
         logger.info("Training completed successfully!")
@@ -202,33 +212,6 @@ def train_mask_rcnn(config_path='Config/config.yaml'):
         
     except Exception as e:
         logger.error(f"An error occurred during training: {str(e)}")
-        raise
-
-def validate_mask_rcnn(model, data_loader):
-    """
-    Validate the trained Mask R-CNN model
-    
-    Args:
-        model: Trained Mask R-CNN model
-        data_loader: DataLoader for validation data
-        
-    """
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-    try:
-        model.eval()
-        total_loss = 0
-        
-        with torch.no_grad():
-            for images, targets in data_loader:
-                images = [img.to(device) for img in images]
-                targets = [{k: v.to(device) for k, v in t.items()} for t in targets]
-                
-                loss_dict = model(images, targets)
-                total_loss += sum(loss for loss in loss_dict.values())
-                
-        return total_loss / len(data_loader)
-    except Exception as e:
-        logging.error(f"Validation error: {str(e)}")
         raise
 
 if __name__ == "__main__":
@@ -244,12 +227,12 @@ if __name__ == "__main__":
         logger.info("Starting YOLO segmentation training...")
         model, results = train_yolo_seg(config_path=config_path, model_size='n')
         logger.info("Starting model validation...")
-        validation_results = validate_yolo_model(model, 'dataset.yaml')
+        validation_results = validate_model(model, 'dataset.yaml', 'YOLO')
     elif config['MODEL']['NAME'] == 'MASKRCNN':
         logger.info("Starting Mask R-CNN training...")
         model = train_mask_rcnn(config_path=config_path)
         logger.info("Starting model validation...")
-        validation_results = validate_mask_rcnn(model, None)  # You'll need to implement the data loader
+        validation_results = validate_model(model, 'dataset.yaml', 'MASKRCNN')
     else:
         logger.error(f"Unsupported model type: {config['MODEL']['NAME']}")
         raise ValueError(f"Model type {config['MODEL']['NAME']} is not supported. Expected 'YOLO' or 'MASKRCNN'")
