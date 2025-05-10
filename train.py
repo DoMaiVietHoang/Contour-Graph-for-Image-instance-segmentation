@@ -31,8 +31,8 @@ def train_yolo_seg(config_path='Config/config.yaml', model_size='n'):
     logger.info("Configuration loaded successfully")
     
     # Initialize YOLO model
-    model = YOLO(f'yolov8{model_size}-seg.pt')
-    logger.info(f"Initialized YOLOv8{model_size}-seg model")
+    model = YOLO(f'yolov11{model_size}-seg.pt')
+    logger.info(f"Initialized YOLOv11{model_size}-seg model")
     
     # Training configuration
     training_args = {
@@ -85,7 +85,7 @@ def train_yolo_seg(config_path='Config/config.yaml', model_size='n'):
         logger.error(f"An error occurred during training: {str(e)}")
         raise
 
-def validate_model(model, data_yaml):
+def validate_yolo_model(model, data_yaml):
     """
     Validate the trained model
     
@@ -112,10 +112,12 @@ if __name__ == "__main__":
     
     # Check model type and train accordingly
     if config['MODEL']['NAME'] == 'YOLO':
+        # For yolo we need to use yolov11-seg.yaml 
+        yolo_config_path = 'Config/YOLO/yolov11-seg.yaml'
         logger.info("Starting YOLO segmentation training...")
         model, results = train_yolo_seg(config_path=config_path, model_size='n')
         logger.info("Starting model validation...")
-        validation_results = validate_model(model, 'dataset.yaml')
+        validation_results = validate_yolo_model(model, 'dataset.yaml')
     else:
         logger.error(f"Unsupported model type: {config['MODEL']['NAME']}")
         raise ValueError(f"Model type {config['MODEL']['NAME']} is not supported. Expected 'YOLO'")

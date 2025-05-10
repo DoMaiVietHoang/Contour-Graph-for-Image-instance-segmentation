@@ -16,4 +16,5 @@ MODEL:
   DETERMINISTIC: True
   SEED: 42
   LR0: 0.0001
+  MASKRCNN_BACKBONE: 'resnet101' # resnet101, resnet50, Swin-L, Swin-B, Swin-T
  
