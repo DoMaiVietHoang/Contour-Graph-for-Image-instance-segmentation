@@ -104,15 +104,10 @@ if __name__ == "__main__":
     # Setup logging
     logging.basicConfig(level=logging.INFO)
     logger = logging.getLogger(__name__)
-    
-    # Load configuration
     config_path = 'Config/config.yaml'
     config = load_config(config_path)
     logger.info(f"Loaded configuration from {config_path}")
-    
-    # Check model type and train accordingly
     if config['MODEL']['NAME'] == 'YOLO':
-        # For yolo we need to use yolov11-seg.yaml 
         yolo_config_path = 'Config/YOLO/yolov11-seg.yaml'
         logger.info("Starting YOLO segmentation training...")
         model, results = train_yolo_seg(config_path=config_path, model_size='n')

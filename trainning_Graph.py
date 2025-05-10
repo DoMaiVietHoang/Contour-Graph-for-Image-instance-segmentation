@@ -1,4 +1,4 @@
-from GCN import ContourMerge
+from models.GCN import ContourMerge
 from dataset import TreeCrownGraphDataset
 from torch_geometric.data import DataLoader
 import torch
