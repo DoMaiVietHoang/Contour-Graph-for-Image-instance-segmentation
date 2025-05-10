@@ -7,5 +7,13 @@ MODEL:
   EPOCHS: 100
   BATCH_SIZE: 16
   IMAGE_SIZE: 640
-
+  WORKERS: 8
+  PROJECT: runs/train
+  NAME: TreeCrownGraph
+  EXIST_OK: True
+  PRETRAINED: True
+  OPTIMIZER: Adam
+  DETERMINISTIC: True
+  SEED: 42
+  LR0: 0.0001
  
