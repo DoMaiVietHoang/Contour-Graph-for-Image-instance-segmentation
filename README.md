@@ -67,22 +67,6 @@ The model achieves competitive results on standard benchmarks:
 - TreeSeg Dataset: 
 
 
-## Contributing
-
-We welcome contributions! Please see our [Contributing Guidelines](CONTRIBUTING.md) for details.
-
-## Citation
-
-If you use this code in your research, please cite:
-
-```bibtex
-
-```
-
-## Acknowledgments
-
-- 
-- 
 
 
 
