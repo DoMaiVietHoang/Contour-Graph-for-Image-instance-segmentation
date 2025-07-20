@@ -8,11 +8,11 @@ This repository includes the implementation of the **TreeCoG** framework along w
 
 ## Features
 
-- 🔍 **Contour-based Segmentation**: Deliberate over-segmentation using a deep edge detector to reduce instance boundary ambiguity.
-- 🧠 **Graph Neural Network**: Learns to merge contours into full tree instances by modeling their spatial and visual relationships.
-- 📈 **High Accuracy**: Achieves **57.01% AP**, **62.21% AP@50**, and **55.32% AP@70** on ForestSeg benchmark.
-- ⚡ **Efficient & Lightweight**: Uses only **10.81M parameters** and infers at **6.2 ms/image**—ideal for real-time UAV deployment.
-- 🌲 **Robust Dataset**: The ForestSeg dataset includes seasonal and altitudinal variations from 4 UAV flight campaigns.
+-  **Contour-based Segmentation**: Deliberate over-segmentation using a deep edge detector to reduce instance boundary ambiguity.
+-  **Graph Neural Network**: Learns to merge contours into full tree instances by modeling their spatial and visual relationships.
+- **High Accuracy**: Achieves **57.01% AP**, **62.21% AP@50**, and **55.32% AP@70** on ForestSeg benchmark.
+- **Efficient & Lightweight**: Uses only **10.81M parameters** and infers at **6.2 ms/image**—ideal for real-time UAV deployment.
+- 🌲**Robust Dataset**: The ForestSeg dataset includes seasonal and altitudinal variations from 4 UAV flight campaigns.
 
 ## Installation
 
